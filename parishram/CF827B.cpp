@@ -12,14 +12,14 @@ using namespace std;
 #define FOR(i, a, b) for (int i = (a); i < (b); ++i)
 
 using lli = long long;
-using pii = pair < int, int >;
+using pii = pair<int, int>;
 
 const int N = 2e5 + 5;
 
 int depth[N];
-vector < pii > edges;
+vector<pii> edges;
 
-int main () {
+int main() {
   int n, k;
   scanf("%d %d", &n, &k);
   FOR(i, 2, k + 2) {

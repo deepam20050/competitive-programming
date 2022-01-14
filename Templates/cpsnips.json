@@ -1,0 +1,44 @@
+{
+	"tDSU": {
+		"prefix": "tDSU",
+		"body": "\nstruct DSU {\n  int size[N];\n  int p[N];\n  void init (int n) {\n    iota(init, init + n + 1, 0);\n  }\n  inline int get (int a) {\n    return (p[a] == a) ? a : p[a] = get(p[a]);\n  }\n  inline bool join (int a, int b) {\n    a = get(a);\n    b = get(b);\n    if (a == b) return 0;\n    if (size[a] < size[b]) {\n      swap(a, b);\n    }\n    size[a] += size[b];\n    p[b] = a;\n    return 1;\n  }\n};\n",
+		"description": "",
+		"scope": "source.c++"
+	},
+	"tfastio": {
+		"prefix": "tfastio",
+		"body": "\nios_base::sync_with_stdio(0);\ncin.tie(0);\n",
+		"description": "",
+		"scope": "source.c++"
+	},
+	"tmodlib": {
+		"prefix": "tmodlib",
+		"body": "\n// Credits : https://codeforces.com/contest/1420/submission/93731409\ntemplate < int M >\nstruct modint {\n  int val = 0;\n  modint () {}\n  modint (int x) : val(x) {\n    while (val < 0) val += M;\n    while (val >= M) val -= M;\n  }\n  modint (long long x): val(x % M) {\n    if (val < 0) val += M;\n  }\n  modint operator+= (modint oth) {\n    val += oth.val;\n    if (val >= M) val -= M;\n    return *this;\n  }\n  modint operator-= (modint oth) {\n    val -= oth.val;\n    if (val < 0) val += M;\n    return *this;\n  }\n  modint operator*= (modint oth) {\n    val = val * 1LL * oth.val % M;\n    return *this;\n  }\n  void operator++ () {\n    ++val;\n    if (val == M) val = 0;\n  }\n  void operator-- () {\n    --val;\n    if (val == -1) {\n      val = M - 1;\n    }\n  }\n  modint operator- () {\n    modint res;\n    res.val = (val == 0) ? 0 : M - val;\n    return res;\n  }\n  int mod() {\n    return M;\n  }\n  modint pow (int x) {\n    modint base = val;\n    modint res = 1;\n    while (x > 0) {\n      if (x & 1) res *= base;\n      base *= base;\n      x >>= 1;\n    }\n    return res;\n  }\n  modint pow (lli x) {\n    modint base = val;\n    modint res = 1;\n    while (x > 0LL) {\n      if (x & 1LL) res *= base;\n      base *= base;\n      x >>= 1LL;\n    }\n    return res;\n  }\n  modint inv () {\n    return pow(M - 2);\n  }\n  friend modint operator+ (modint a, modint b) {\n    return modint(a) += b;\n  }\n  friend modint operator- (modint a, modint b) {\n    return modint(a) -= b;\n  }\n  friend modint operator* (modint a, modint b) {\n    return modint(a) *= b;\n  }\n  friend bool operator== (modint a, modint b) {\n    return a.val == b.val;\n  }\n  friend bool operator!= (modint a, modint b) {\n    return a.val != b.val;\n  }\n};\n\nusing mint = modint < ${1: modulus value } >;\n\nconst int ${2: limit name} = ${3: limit};\n\nmint fact[$2];\nmint inv_fact[$2];\n\ninline mint nCk (int n, int k) {\n  return k > n ? 0 : fact[n] * inv_fact[k] * inv_fact[n - k];\n}\n\ninline void genFacAndInv () {\n  fact[0] = 1;\n  inv_fact[0] = 1;\n  FOR(i, 1, $2 + 1) {\n    fact[i] = fact[i - 1] * i;\n    inv_fact[i] = fact[i].inv();\n  }\n}\n",
+		"description": "",
+		"scope": "source.c++"
+	},
+	"tsmallprime": {
+		"prefix": "tsmallprime",
+		"body": "\nconst int ${1:limit name} = ${2:limit};\n\nint sp[$1];\nbitset < $1 > vis_prime;\n\n// Credits : https://codeforces.com/blog/entry/7262\ninline void sieve () {\n  for (int i = 2; i < $1; i += 2) sp[i] = 2;\n  for (int i = 3; i < $1; i += 2) \n    if (!vis_prime[i]) {\n      sp[i] = i;\n      for (int j = i; j * 1ll * i < 1ll * $1; j += 2) {\n        if (!vis_prime[j * i]) vis_prime[j * i] = 1, sp[j * i] = i;\n      }\n    }\n}\n",
+		"description": "",
+		"scope": "source.c++"
+	},
+	"tSparse": {
+		"prefix": "tSparse",
+		"body": "\n/* Credits: https://codeforces.com/contest/1548/submission/124526158\n * Usage: SparseTable < lli > st(vec, [&](lli i, ll j) { return __gcd(i, j); });\n * Indexing is from 0 (NOT from 1)\n */\ntemplate < typename T, class F = function < T (const T&, const T&) >>\nstruct SparseTable {\n  int n;\n  vector < vector < T > > mat;\n  F foo;\n\n  SparseTable (const vector < T > &a, const F &f) : func (f) {\n    n = sz(a);\n    int max_log = __lg(n);\n    mat[0] = a;\n    FOR(j, 1, max_log) {\n      mat[j].resize(n - (1 << j) + 1);\n      FOR(i, 0, n - (1 << j) + 1) {\n        mat[j][i] = foo(mat[j - 1][i], mat[j - 1][i + (1 << (j - 1))]);\n      }\n    }\n  }\n  T query (int l, int r) const {\n    int lg = __lg(r - l + 1);\n    return foo(mat[lg][l], mat[lg][r - (1 << lg) + 1]);\n  }\n};\n\n",
+		"description": "",
+		"scope": "source.c++"
+	},
+	"jjk": {
+		"prefix": "jjk",
+		"body": "\n#include \"bits/stdc++.h\"\nusing namespace std;\n\n#define sz(x) int((x).size())\n#define all(x) begin(x), end(x)\n#define eb emplace_back\n#define em emplace\n#define mp make_pair\n#define F first\n#define S second\n#define FOR(i, a, b) for (int i = (a); i < (b); ++i)\n\nusing lli = long long;\nusing pii = pair < int, int >;\n\nint main () {\n  return 0;\n}\n",
+		"description": "",
+		"scope": "source.c++"
+	},
+	"tvecuniq": {
+		"prefix": "tvecuniq",
+		"body": "\nsort(all(${1:vector name}));\n$1.erase(unique(all($1)), $1.end());\n",
+		"description": "",
+		"scope": "source.c++"
+	}
+}
