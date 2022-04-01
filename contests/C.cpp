@@ -13,116 +13,65 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
-// Credits : https://codeforces.com/contest/1420/submission/93731409
-template < int M >
-struct modint {
-  int val = 0;
-  modint () {}
-  modint (int x) : val(x) {
-    while (val < 0) val += M;
-    while (val >= M) val -= M;
+const int N = 2e5 + 5;
+const int LN = 26;
+const int inf = 1e8;
+
+char s[N];
+int dp[N];
+int nxt[N][LN];
+int n;
+
+int f (int i) {
+  if (i >= n) {
+    return 1;
   }
-  modint (long long x): val(x % M) {
-    if (val < 0) val += M;
+  auto &r = dp[i];
+  if (r != -1) {
+    return r;
   }
-  modint operator+= (modint oth) {
-    val += oth.val;
-    if (val >= M) val -= M;
-    return *this;
-  }
-  modint operator-= (modint oth) {
-    val -= oth.val;
-    if (val < 0) val += M;
-    return *this;
-  }
-  modint operator*= (modint oth) {
-    val = val * 1LL * oth.val % M;
-    return *this;
-  }
-  void operator++ () {
-    ++val;
-    if (val == M) val = 0;
-  }
-  void operator-- () {
-    --val;
-    if (val == -1) {
-      val = M - 1;
+  r = n - i + 1;
+  int c = s[i] - 'a';
+  if (nxt[i][c] != -1) {
+    int to = nxt[i][c];
+    int add = to - i - 1;
+    r = min(r, add + n - to);
+    FOR(j, 0, LN) {
+      if (nxt[to][j] != -1) {
+        r = min(r, add + nxt[to][j] - to  - 1 + f(nxt[to][j]));
+      }
     }
   }
-  modint operator- () {
-    modint res;
-    res.val = (val == 0) ? 0 : M - val;
-    return res;
-  }
-  int mod() {
-    return M;
-  }
-  modint pow (int x) {
-    modint base = val;
-    modint res = 1;
-    while (x > 0) {
-      if (x & 1) res *= base;
-      base *= base;
-      x >>= 1;
-    }
-    return res;
-  }
-  modint pow (lli x) {
-    modint base = val;
-    modint res = 1;
-    while (x > 0LL) {
-      if (x & 1LL) res *= base;
-      base *= base;
-      x >>= 1LL;
-    }
-    return res;
-  }
-  modint inv () {
-    return pow(M - 2);
-  }
-  friend modint operator+ (modint a, modint b) {
-    return modint(a) += b;
-  }
-  friend modint operator- (modint a, modint b) {
-    return modint(a) -= b;
-  }
-  friend modint operator* (modint a, modint b) {
-    return modint(a) *= b;
-  }
-  friend bool operator== (modint a, modint b) {
-    return a.val == b.val;
-  }
-  friend bool operator!= (modint a, modint b) {
-    return a.val != b.val;
-  }
-};
-
-using mint = modint < 1000000007 >;
-
-const int N = 2e6 + 5;
-
-mint fact[N];
-mint inv_fact[N];
-
-inline mint nCk (int n, int k) {
-  return k > n ? 0 : fact[n] * inv_fact[k] * inv_fact[n - k];
+  return r;
 }
 
-inline void genFacAndInv () {
-  fact[0] = 1;
-  inv_fact[0] = 1;
-  FOR(i, 1, N + 1) {
-    fact[i] = fact[i - 1] * i;
-    inv_fact[i] = fact[i].inv();
+void solve () {
+  scanf("%s", s + 1);
+  n = strlen(s + 1);
+  FOR(j, 0, LN) {
+    nxt[n + 1][j] = -1;
   }
+  for (int i = n; i >= 0; --i) {
+    dp[i] = -1;
+    FOR(j, 0, LN) {
+      nxt[i][j] = nxt[i + 1][j];
+      if (i + 1 <= n && j + 'a' == s[i + 1]) {
+        nxt[i][j] = i + 1;
+      }
+    }
+  }
+  int ans = n;
+  FOR(i, 1, n + 1) {
+    ans = min(ans, f(i) + i - 1);
+  }
+  printf("%d\n", ans);
 }
 
 int main () {
-  genFacAndInv();
-  int xa, ya, xb, yb;
-  scanf("%d %d %d %d", &xa, &ya, &xb, &yb);
-  // mint ans = nCk(xb + yb + 2, xb + 1) - nCk(xa + ya + , xa);
-  mint ans = nCk(xb + yb + 2, xb + 1) - nCk(xb + ya + 1, xb + 1) - nCk(xa + yb + 1, xa) + nCk(xa + ya, xa);
-  printf("%d\n", ans.val);
+  int tc;
+  scanf("%d", &tc);
+  while (tc--) {
+    solve();  
+  }
   return 0;
 }
