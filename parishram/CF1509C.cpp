@@ -13,42 +13,29 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
-const int N = 1e6 + 5;
+const int N = 2005;
 
+lli dp[N][N];
 int a[N];
-int b[N];
-int n;
 
-inline bool check () {
-  FOR(i, 1, n + 1) {
-    if (a[i] != b[i]) {
-      return 0;
-    }
+lli solve (int l, int r) {
+  if (dp[l][r] != -1) {
+    return dp[l][r];
   }
-  return 1;
+  if (l == r) {
+    return 0;
+  }
+  return dp[l][r] = a[r] - a[l] + min(solve(l + 1, r), solve(l, r - 1));
 }
 
 int main () {
+  int n;
   scanf("%d", &n);
   FOR(i, 1, n + 1) {
     scanf("%d", a + i);
   }
-  FOR(i, 1, n + 1) {
-    scanf("%d", b + i);
-  }
-  if (check()) {
-    puts("0");
-    exit(0);
-  }
-  FOR(i, 1, n + 1) {
-    FOR(j, 2, n + 1) {
-      a[j] ^= a[j - 1];
-    }
-    if (check()) {
-      printf("%d\n", i);
-      exit(0);
-    }
-  }
-  puts("-1");
+  sort(a + 1, a + n + 1);
+  memset(dp, -1, sizeof dp);
+  printf("%lld\n", solve(1, n));
   return 0;
 }

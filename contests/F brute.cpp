@@ -13,17 +13,19 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
+const int N = 64900;
+
 int main () {
-  int tc;
-  cin >> tc;
-  while (tc--) {
-    int a, b;
-    cin >> a >> b;
-    if (a == 0) {
-      cout << 1 << '\n';
-    } else {
-      cout << a + 2 * b  + 1<< '\n';
+  int x = 9;
+  int ans = 0;
+  FOR(i, 0, N) {
+    FOR(j, 0, N) {
+      if (i * j % N == x) {
+        cout << i << " " << j << '\n';
+      }
+      ans +=  (i * j % N) == x;
     }
   }
+  cout << ans << '\n';
   return 0;
 }
