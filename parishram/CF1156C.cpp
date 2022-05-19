@@ -13,15 +13,15 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
-const int N = 1e6 + 5;
+const int N = 2e5 + 5;
 
 int a[N];
-int b[N];
-int n;
+int n, m;
+int z;
 
-inline bool check () {
-  FOR(i, 1, n + 1) {
-    if (a[i] != b[i]) {
+inline bool f (int m) {
+  FOR(i, 0, m) {
+    if (a[n - m + i] - a[i] < z) {
       return 0;
     }
   }
@@ -29,26 +29,20 @@ inline bool check () {
 }
 
 int main () {
-  scanf("%d", &n);
-  FOR(i, 1, n + 1) {
+  scanf("%d %d", &n, &z);
+  FOR(i, 0, n) {
     scanf("%d", a + i);
   }
-  FOR(i, 1, n + 1) {
-    scanf("%d", b + i);
-  }
-  if (check()) {
-    puts("0");
-    exit(0);
-  }
-  FOR(i, 1, n + 1) {
-    FOR(j, 2, n + 1) {
-      a[j] ^= a[j - 1];
-    }
-    if (check()) {
-      printf("%d\n", i);
-      exit(0);
+  sort(a, a + n);
+  int l = 0, r = n / 2 + 1;
+  FOR(i, 0, 30) {
+    int m = l + r >> 1;
+    if (f(m)) {
+      l = m;
+    } else {
+      r = m;
     }
   }
-  puts("-1");
+  printf("%d\n", l);
   return 0;
 }

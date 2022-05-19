@@ -13,27 +13,23 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
-void print (int x, vector < int > v) {
-  cout << x << " : ";
-  for (auto &e : v) {
-    cout << e << " ";
-  }
-  puts("");
-}
+const int N = 5e4 + 5;
+
+string arr[N];
+int n;
 
 int main () {
-  int n;
-  scanf("%d", &n);
-  vector < int > v(n);
-  for (auto &e : v) {
-    scanf("%d", &e);
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+  cin >> n;
+  FOR(i, 0, n) {
+    cin >> arr[i];
   }
-  print(0, v);
-  FOR(i, 1, 20) {
-    for (int i = 1; i < n; ++i) {
-      v[i] ^= v[i - 1];
-    }
-    print(i, v);
+  sort(arr, arr + n, [] (const string &a, const string &b) {
+      return a + b < b + a;
+      });
+  FOR(i, 0, n) {
+    cout << arr[i];
   }
   return 0;
 }

@@ -9,23 +9,25 @@ using namespace std;
 #define F first
 #define S second
 #define FOR(i, a, b) for (int i = (a); i < (b); ++i)
+#define lb lower_bound
+#define ub upper_bound
 
 using lli = long long;
 using pii = pair < int, int >;
 
-const int N = 64900;
-
 int main () {
-  int x = 9;
-  int ans = 0;
-  FOR(i, 0, N) {
-    FOR(j, 0, N) {
-      if (i * j % N == x) {
-        cout << i << " " << j << '\n';
+  lli n; scanf("%lld", &n);
+  lli ans = n;
+  FOR(i, 1, 1 << 9) {
+    int x = -1;
+    FOR(j, 0, 9) {
+      if (i >> j & 1) {
+        if (x == -1) x = j + 2;
+        x = x / __gcd(j + 2, x) * (j + 2);
       }
-      ans +=  (i * j % N) == x;
     }
+    ans = ans + (__builtin_popcount(i) & 1 ? -1 : 1) * n / x;
   }
-  cout << ans << '\n';
+  printf("%lld\n", ans);
   return 0;
 }
