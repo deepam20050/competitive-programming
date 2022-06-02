@@ -1,0 +1,22 @@
+<snippet>
+  <content><![CDATA[
+const int MAXN = ${1:LIMIT};
+
+int sp[MAXN];
+bool vis_prime[MAXN];
+
+// Credits : https://codeforces.com/blog/entry/7262
+inline void sieve () {
+  for (int i = 2; i < MAXN; i += 2) sp[i] = 2;
+  for (int i = 3; i < MAXN; i += 2) 
+    if (!vis_prime[i]) {
+      sp[i] = i;
+      for (int j = i; j * 1ll * i < 1ll * MAXN; j += 2) if (!vis_prime[j * i]) vis_prime[j * i] = 1, sp[j * i] = i;
+    }
+}
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>tsmallestprime</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.c++</scope>
+</snippet>
