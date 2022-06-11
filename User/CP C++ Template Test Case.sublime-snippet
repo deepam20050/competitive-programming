@@ -6,7 +6,7 @@ using namespace std;
 #ifdef DEBUG
 #include "../algo/debug.hpp"
 #else
-#define debug(...) 0
+#define debug(...)
 #endif
 
 #define FOR(i, a, b) for (int i = (a); i < (b); ++i)
@@ -15,24 +15,27 @@ using namespace std;
 #define eb emplace_back
 #define em emplace
 #define mp make_pair
-#define F first
-#define S second
+#define f first
+#define s second
 #define lb lower_bound
 #define ub upper_bound
 
 using lli = long long;
 using pii = pair < int, int >;
+using vi = vector < int >;
 
 void solveTC () {
 }
 
 int main () {
-	ios_base::sync_with_stdio(false); cin.tie(NULL);
-  cout << fixed << setprecision(15); cerr << fixed << setprecision(10);
-  int ntt; cin >> ntt;
-	FOR(__, 1, ntt + 1) {
-		solveTC();
-	}
+	#ifdef DEBUG
+  freopen("debug.txt", "w", stderr);
+  #endif
+  int ntc = 1;
+  scanf("%d", &ntc);
+  while (ntc--) {
+  	solveTC();
+  }
   return 0;
 }
 ]]></content>

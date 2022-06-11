@@ -1,0 +1,31 @@
+<snippet>
+  <content><![CDATA[
+template < class T >
+struct FenwickTree {
+  vector < T > t;
+  int n;
+  FenwickTree (int m) : n(m) {
+    t.clear();
+    t.resize(n + 1);
+  }
+  void update (int idx, T add) {
+    while (idx <= n) {
+      t[idx] += add;
+      idx += idx & -idx;
+    }
+  }
+  T query (int idx) {
+    T ret = 0;
+    while (idx > 0) {
+      ret += t[idx];
+      idx -= idx & -idx;
+    }
+    return ret;
+  }
+};
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>tfenwick</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.c++</scope>
+</snippet>

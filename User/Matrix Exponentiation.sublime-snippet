@@ -1,47 +1,63 @@
 <snippet>
   <content><![CDATA[
-const int MOD = ${1:mod value};
-
-inline int add (int __a, int __b, int MM = MOD) {
-  return (__a + __b) % MM;
-}
-
-inline int mul (int __a, int __b, int MM = MOD) {
-  return __a * 1ll * __b % MM;
-}
-
-struct Matrix {
-  vector < vector < int > > mat;
-  int n_rows, n_cols;
-  Matrix () {}
-  Matrix (vector < vector < int > > val) : mat(val), n_rows(val.size()), n_cols(val[0].size()) {}
-  static Matrix identity_matrix (int n) {
-    vector < vector < int > > iden(n, vector < int > (n));
-    FOR(i, 0, n) iden[i][i] = 1;
-    return move(iden);
+template < class T > struct Matrix {
+  int R, C;
+  vector < vector < T > > data;
+  Matrix(int r, int c) : R(r), C(c) {
+    data.assign(R, vector < T > (C));
   }
-  Matrix operator *(const Matrix &other) const {
-    int n = n_rows, m = other.n_cols;
-    vector < vector < int > > product(n, vector < int > (m));
-    FOR(i, 0, n) FOR(j, 0, m) FOR(k, 0, n_cols) {
-      product[i][j] = add(product[i][j], mul(mat[i][k], other.mat[k][j]));
+  Matrix(vector<vector<T>> dat) : data(dat), R(sz(data)), C(sz(data[0])) {}
+
+  Matrix operator+(const Matrix& M) {
+    Matrix res(R, C);
+    rep(i, 0, R) {
+      rep(j, 0, C) {
+        res.data[i][j] = data[i][j] + M.data[i][j];
+      }
     }
-    return move(Matrix(move(product)));
+    return res;
+  }
+  Matrix operator-(const Matrix& M) {
+    Matrix res(R, C);
+    rep(i, 0, R) {
+      rep(j, 0, C) {
+        res.data[i][j] = data[i][j] - M.data[i][j];
+      }
+    }
+    return res;
+  }
+  Matrix operator*(const Matrix& M) {
+    Matrix res(R, M.C);
+    rep(i, 0, R) {
+      rep(j, 0, C) {
+        rep(k, 0, M.C) {
+          res.data[i][k] += data[i][j] * M.data[j][k];
+        }
+      }
+    }
+    return res;
+  }
+  Matrix& operator+=(const Matrix& M) {
+    return *this = (*this)+M;
+  }
+  Matrix& operator-=(const Matrix& M) {
+    return *this = (*this)-M;
+  }
+  Matrix& operator*=(const Matrix& M) {
+    return *this = (*this)*M;
+  }
+  friend Matrix exp(Matrix M, lli P) {
+    Matrix res(M.R, M.C);
+    rep(i, 0, M.R) {
+      res.data[i][i] = 1;
+    }
+    for (; P; P >>= 1ll, M *= M) if (P & 1) res *= M;
+    return res;
   }
 };
-
-Matrix bin_pow (Matrix a, long long b) {
-  Matrix prod = Matrix::identity_matrix(a.n_cols);
-  while (b > 0) {
-    if (b & 1) prod = prod * a;
-    a = a * a;
-    b >>= 1ll;
-  }
-  return prod;
-}
 ]]></content>
   <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-  <tabTrigger>tmatrx</tabTrigger>
+  <tabTrigger>tmatrix</tabTrigger>
   <!-- Optional: Set a scope to limit where the snippet will trigger -->
   <scope>source.c++</scope>
 </snippet>

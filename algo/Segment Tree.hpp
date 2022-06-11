@@ -1,29 +1,12 @@
-#include "bits/stdc++.h"
-using namespace std;
-
-#define sz(x) int((x).size())
-#define all(x) begin(x), end(x)
-#define eb emplace_back
-#define em emplace
-#define mp make_pair
-#define F first
-#define S second
-#define FOR(i, a, b) for (int i = (a); i < (b); ++i)
-#define lb lower_bound
-#define ub upper_bound
-
-using lli = long long;
-using pii = pair < int, int >;
-
 // 1 based indexing
-template < typename T >
+template < class T >
 struct SegmentTree {
   vector < T > t;
   // vector < T > lazy;
   T none_exist;
   int n;
   SegmentTree (T none_, const vector < T > &a) {
-    n = sz(a); t.reserve(n << 2);t.resize(n << 2);
+    n = sz(a); t.reserve(n << 2); t.resize(n << 2);
     fill(all(t), none_exist);
     none_exist = none_;
     build(a, 1, n - 1, 1);
@@ -78,7 +61,3 @@ struct SegmentTree {
     range_update(midx + 1, rx, 2 * x + 1, ql, qr, val);
   }
 };
-
-int main () {
-  return 0;
-}
