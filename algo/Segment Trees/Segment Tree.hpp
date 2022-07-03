@@ -53,7 +53,7 @@ struct SegmentTree {
     if (lx > qr || rx < ql || ql > qr) {
       return;
     }
-    if (ql <= lx && rx <= qr) {
+    if (ql >= lx && rx <= qr) {
       // code
     }
     int midx = lx + (rx - lx >> 1);

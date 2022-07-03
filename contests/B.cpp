@@ -15,29 +15,8 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int n; cin >> n;
-  vector < int > a(n);
-  for (auto &e : a) {
-    cin >> e;
-  }
-  if (n == 1) {
-    cout << -1 << '\n';
-    return;
-  }
-  vector < int > ans(n);
-  iota(all(ans), 1);
-  for (int i = 0; i < n; ++i) {
-    if (ans[i] == a[i]) {
-      if (i + 1 < n) {
-        swap(ans[i], ans[i + 1]);
-      } else {
-        swap(ans[i - 1], ans[i]);
-      }
-    }
-  }
-  for (int i = 0; i < n; ++i) {
-    cout << ans[i] << " \n"[i == n - 1];
-  }
+  lli x = 16;
+  cout << __builtin_popcount(x) << '\n';
 }
 
 int main() {
@@ -46,7 +25,6 @@ int main() {
     freopen("debug.txt", "w", stderr);
   #endif
   int nt = 1;
-  cin >> nt;
   while (nt--) {
     test_case();
   }

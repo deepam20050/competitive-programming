@@ -15,55 +15,20 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int n, m, k; cin >> n >> m >> k;
-  string a, b; cin >> a >> b;
-  sort(all(a));
-  sort(all(b));
-  reverse(all(a));
-  reverse(all(b));
-  string c;
-  int cnt = 0;
-  int prev = -1;
-  while (!a.empty() && !b.empty()) {
-    if (a.back() < b.back()) {
-      if (prev == 0) {
-        if (cnt == k) {
-          c += b.back();
-          cnt = 1;
-          prev = 1;
-          b.pop_back();
-        } else {
-          c += a.back();
-          ++cnt;
-          a.pop_back();
-        }
-      } else {
-        c += a.back();
-        cnt = 1;
-        prev = 0;
-        a.pop_back();
-      }
+  int a, b; cin >> a >> b;
+  string s;
+  for (int i = 0; a > 0 && b > 0; ++i) {
+    if (i & 1) {
+      s += "0";
+      --a;
     } else {
-      if (prev == 1) {
-        if (cnt == k) {
-          c += a.back();
-          cnt = 1;
-          prev = 0;
-          a.pop_back();
-        } else {
-          c += b.back();
-          ++cnt;
-          b.pop_back();
-        }
-      } else {
-        c += b.back();
-        cnt = 1;
-        prev = 1;
-        b.pop_back();
-      }
+      s += "1";
+      --b;
     }
   }
-  cout << c << '\n';
+  s += string(a, '0');
+  s += string(b, '1');
+  cout << s << '\n';
 }
 
 int main() {
