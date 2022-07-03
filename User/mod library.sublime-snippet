@@ -1,8 +1,7 @@
 <snippet>
   <content><![CDATA[
 // Credits : https://codeforces.com/contest/1420/submission/93731409
-template < int M >
-struct modint {
+template < int M > struct modint {
   int val = 0;
   modint () {}
   modint (int x) : val(x) {
@@ -79,33 +78,15 @@ struct modint {
   friend modint operator/(modint a, modint const b) {
     return a /= b;
   }
-  friend std::istream& operator>>(std::istream& istream, modint& a) {
+  friend std::istream& operator>> (std::istream& istream, modint& a) {
     long long v; istream >> v; a = v; return istream;
   }
-  friend std::ostream& operator<<(std::ostream& ostream, modint const& a) {
+  friend std::ostream& operator<< (std::ostream& ostream, modint const& a) {
     return ostream << a.val;
   }
 };
 
 using mint = modint < ${1: modulus value } >;
-
-const int ${2: limit name} = ${3: limit};
-
-mint fact[$2];
-mint inv_fact[$2];
-
-inline mint nCk (int n, int k) {
-  return k > n ? 0 : fact[n] * inv_fact[k] * inv_fact[n - k];
-}
-
-inline void genFacAndInv () {
-  fact[0] = 1;
-  inv_fact[0] = 1;
-  FOR(i, 1, $2) {
-    fact[i] = fact[i - 1] * i;
-    inv_fact[i] = fact[i].inv();
-  }
-}
 ]]></content>
   <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
   <tabTrigger>tmod</tabTrigger>

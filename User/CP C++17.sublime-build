@@ -1,0 +1,12 @@
+{
+    "shell_cmd": "g++-7 -std=gnu++17 -O2 -DDEBUG \"${file}\" && mv a.out ~/Desktop/karma",
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "selector": "source.c, source.c++, source.cpp",
+    "variants":
+    [
+        {
+            "name": "Run",
+            "shell_cmd": "g++-7 -std=gnu++17 -O2 -DDEBUG \"${file}\" && mv a.out ~/Desktop/karma",
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+<snippet>
+  <content><![CDATA[
+const int dx_diag[] = {1, -1, -1, 1};
+const int dy_diag[] = {1, -1, 1, -1};
+const int dx_map[] = {1, -1, 0, 0};
+const int dy_map[] = {0, 0, 1, -1};
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>tgrid</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.c++</scope>
+</snippet>

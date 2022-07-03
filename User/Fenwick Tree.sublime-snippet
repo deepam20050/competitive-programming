@@ -1,11 +1,9 @@
 <snippet>
   <content><![CDATA[
-template < class T >
-struct FenwickTree {
+template < class T > struct FenwickTree {
   vector < T > t;
   int n;
   FenwickTree (int m) : n(m) {
-    t.clear();
     t.resize(n + 1);
   }
   void update (int idx, T add) {
@@ -21,6 +19,9 @@ struct FenwickTree {
       idx -= idx & -idx;
     }
     return ret;
+  }
+  T rangeQuery (int l, int r) {
+    return query(r) - query(l - 1);
   }
 };
 ]]></content>

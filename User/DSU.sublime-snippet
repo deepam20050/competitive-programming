@@ -5,9 +5,7 @@ struct DSU {
   DSU (int n) {
     par.assign(n, 0); 
     siz.assign(n, 1);
-    rep(i, 0, n) {
-      par[i] = i;
-    }
+    iota(all(par), 0);
   }
   int find (int x) {
     return par[x] == x ? x : par[x] = find(par[x]);

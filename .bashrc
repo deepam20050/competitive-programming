@@ -36,8 +36,9 @@ alias crr='cd $HOME/Desktop/karma/contest'
 alias krr='cd $HOME/Desktop/karma'
 alias sublkarma='cp -r ~/.config/sublime-text/Packages/User ~/Desktop/karma/ && cp ~/.bashrc ~/Desktop/karma/'
 
-#Cleanup orphaned packages
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+#Cleanup the system
+alias clean_orphans='sudo pacman -Rns $(pacman -Qtdq)'
+alias clean_home_cache='rm -rf ~/.cache/*'
 
 #list
 alias ls='ls --color=auto'

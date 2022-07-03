@@ -1,0 +1,24 @@
+<snippet>
+  <content><![CDATA[
+// insert mod library
+using mint = modint < ${1: modulus value } >;
+const int ${2: limit name} = ${3: limit value};
+mint fact[$2];
+mint inv_fact[$2];
+
+void genFacAndInv () {
+  fact[0] = 1; inv_fact[0] = 1;
+  for (int i = 1; i < $2; ++i) {
+    fact[i] = fact[i - 1] * i;
+    inv_fact[i] = fact[i].inv();
+  }
+}
+inline mint nCk (int n, int k) {
+  return k > n ? 0 : fact[n] * inv_fact[k] * inv_fact[n - k];
+}
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>tfactorial</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.c++</scope>
+</snippet>
