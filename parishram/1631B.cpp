@@ -15,12 +15,20 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n; cin >> n;
+  vector < int > a(n + 1);
+  for (int i = 1; i <= n; ++i) {
+    cin >> a[i];
+  }
+  reverse(1 + all(a));
+  int ans = 0, x = 1;
+  while (x < n) {
+    if (a[x + 1] == a[1]) {
+      ++x;
+      continue;
+    }
+    ++ans;
+    x += x;
   }
   cout << ans << '\n';
 }

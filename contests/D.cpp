@@ -15,13 +15,36 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
+  string s; cin >> s;
+  int p; cin >> p;
+  priority_queue < pii > pq;
+  int sum = 0;
+  for (auto e : s) {
+    sum += e - 'a' + 1;
+  }
+  int n = sz(s);
+  for (int i = 0; i < n; ++i) {
+    pq.emplace(s[i] - 'a' + 1, i); 
+  }
+  while (sum > p && !pq.empty()) {
+    auto [val, pos] = pq.top();
+    pq.pop();
+    sum -= val;
+    s[pos] = '#';
+  }
+  for (auto &e : s) {
+    if (e != '#') {
+      cout << e;
+    }
+  }
+  cout << '\n';
 }
 
 int main() {
-  cin.tie(nullptr)->sync_with_stdio(false);
   #ifdef DEBUG
     freopen("debug.txt", "w", stderr);
   #endif
+  cin.tie(nullptr)->sync_with_stdio(false);
   int nt = 1;
   cin >> nt;
   while (nt--) {

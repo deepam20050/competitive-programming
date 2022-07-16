@@ -15,14 +15,20 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n; cin >> n;
+  bool ok = 1;
+  for (int i = 1; i <= n; ++i) {
+    int x; cin >> x;
+    bool found = 0;
+    for (int j = i + 1; j >= 2; --j) {
+      if (x % j) {
+        found = 1;
+        break;
+      }
+    }
+    ok &= found;
   }
-  cout << ans << '\n';
+  ok ? cout << "YES\n" : cout << "NO\n";
 }
 
 int main() {

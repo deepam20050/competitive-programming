@@ -14,15 +14,23 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
+const int N = 1e5 + 5;
+
+bool not_prime[N];
+
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  for (int i = 2; i * 1ll * i < N; ++i) {
+    if (!not_prime[i]) {
+      for (int j = i + i; j < N; j += i) {
+        not_prime[j] = 1;
+      }
+    }
   }
-  cout << ans << '\n';
+  int n; cin >> n;
+  cout << (n > 2 ? 2 : 1) << '\n';
+  for (int i = 2; i <= n + 1; ++i) {
+    cout << (!not_prime[i] ? 1 : 2) << " ";
+  }
 }
 
 int main() {
@@ -31,7 +39,6 @@ int main() {
   #endif
   cin.tie(nullptr)->sync_with_stdio(false);
   int nt = 1;
-  cin >> nt;
   while (nt--) {
     test_case();
   }

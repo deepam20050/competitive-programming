@@ -15,14 +15,24 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n; cin >> n;
+  if (n % 2 == 0) {
+    cout << "NO\n";
+    return;
   }
-  cout << ans << '\n';
+  cout << "YES\n";
+  vector < int > a(2 * n);
+  for (int i = 0; i < n; ++i) {
+    a[i] = 2 * i + 1;
+    a[i + n] = 2 * i + 2;
+    if (i & 1) {
+      swap(a[i], a[i + n]);
+    }
+  }
+  for (auto &e : a) {
+    cout << e << " ";
+  }
+  cout << '\n';
 }
 
 int main() {
@@ -31,7 +41,6 @@ int main() {
   #endif
   cin.tie(nullptr)->sync_with_stdio(false);
   int nt = 1;
-  cin >> nt;
   while (nt--) {
     test_case();
   }

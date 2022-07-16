@@ -16,34 +16,35 @@ using pii = pair < int, int >;
 
 void test_case() {
   int n; cin >> n;
-  string s; cin >> s;
-  if (hello(all(s), '1') == 0 || count(all(s), '1') == n) {
-    cout << n << '\n';
-    return;
+  vector < int > a(n);
+  for (auto &e : a) {
+    cin >> e;
   }
-  lli ans = (lli)n * (n - 1) >> 1ll;
-  ans += n;
-  string x = s;
-  for (int j = 0; j < 2; ++j) {
-    int lst = x.back() - '0';
-    int len = 0;
-    while (!x.empty() && x.back() - '0' == lst) {
-      ++len;
-      x.pop_back();
+  vector < int > ans(n);
+  int prev = a[0];
+  for (int i = 1; i < n; ++i) {
+    for (int j = 0; j < 30; ++j) {
+      int bit1 = prev >> j & 1;
+      int bitx = a[i] >> j & 1;
+      if (bit1) {
+        if (!bitx) {
+          ans[i] ^= 1 << j;
+        }
+      } 
     }
-    ans -= (lli)len * (len - 1) >> 1ll;
-    ans -= (lli)sz(x) * (len - 1);
-    x = s;
-    reverse(all(x));
+    prev = a[i] ^ ans[i];
   }
-  cout << ans << '\n';
+  for (auto &e : ans) {
+    cout << e << " ";
+  }
+  cout << '\n';
 }
 
 int main() {
-  cin.tie(nullptr)->sync_with_stdio(false);
   #ifdef DEBUG
     freopen("debug.txt", "w", stderr);
   #endif
+  cin.tie(nullptr)->sync_with_stdio(false);
   int nt = 1;
   cin >> nt;
   while (nt--) {

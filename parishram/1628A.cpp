@@ -14,25 +14,35 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
+const int N = 2e5 + 5;
+
+queue < int > pos[N];
+
 void test_case() {
-  int n, k; cin >> n >> k;
-  map < int, int > fst;
-  map < int, int > lst;
-  for (int i = 1; i <= n; ++i) {
-    int x; cin >> x;
-    if (fst.count(x) == 0) {
-      fst[x] = i;
-    }
-    lst[x] = i;
+  int n; cin >> n;
+  vector < int > a(n);
+  for (int i = 0; i < n; ++i) {
+    cin >> a[i];
+    pos[a[i]].emplace(i);
   }
-  while (k--) {
-    int a, b; cin >> a >> b;
-    if (!fst.count(a) || !fst.count(b)) {
-      cout << "NO\n";
-    } else {
-      fst[a] <= lst[b] ? cout << "YES\n" : cout << "NO\n";
+  vector < int > ans;
+  for (int i = 0; i < n; ) {
+    int j = -1, mx = i;
+    while (j + 1 <= n && !pos[j + 1].empty()) {
+      ++j;
+      mx = max(mx, pos[j].front());
     }
+    ans.emplace_back(j + 1);
+    for (int k = i; k <= mx; ++k) {
+      pos[a[k]].pop();
+    }
+    i = mx + 1;
   }
+  cout << sz(ans) << '\n';
+  for (auto &e : ans) {
+    cout << e << " ";
+  }
+  cout << '\n';
 }
 
 int main() {

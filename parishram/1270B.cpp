@@ -15,14 +15,19 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n; cin >> n;
+  vector < int > a(n);
+  for (auto &e : a) {
+    cin >> e;
   }
-  cout << ans << '\n';
+  for (int i = 1; i < n; ++i) {
+    if (abs(a[i] - a[i - 1]) >= 2) {
+      cout << "YES\n";
+      cout << i << " " << i + 1 << '\n';
+      return;
+    }
+  }
+  cout << "NO\n";
 }
 
 int main() {

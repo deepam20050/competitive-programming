@@ -15,13 +15,30 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
+  int n; cin >> n;
+  vector < pii > a(n);
+  vector < int > deg(n);
+  for (auto &[x, y] : a) {
+    cin >> x >> y;
+    --x;
+    --y;
+    ++deg[x];
+    ++deg[y];
+  }
+  for (auto &e : deg) {
+    if (e != 2) {
+      cout << "NO\n";
+      return;
+    }
+  }
+  cout << "YES\n";
 }
 
 int main() {
-  cin.tie(nullptr)->sync_with_stdio(false);
   #ifdef DEBUG
     freopen("debug.txt", "w", stderr);
   #endif
+  cin.tie(nullptr)->sync_with_stdio(false);
   int nt = 1;
   cin >> nt;
   while (nt--) {

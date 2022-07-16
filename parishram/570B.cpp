@@ -15,14 +15,20 @@ using lli = long long;
 using pii = pair < int, int >;
 
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n, m; cin >> n >> m;
+  if (m == 1) {
+    cout << (n == 1 ? 1 : 2) << '\n';
+  } else if (m == n) {
+    cout << m - 1 << '\n';
+  } else {
+    int p1 = n - (m + 1) + 1;
+    int p2 = m - 1;
+    if (p1 > p2) {
+      cout << m + 1 << '\n';
+    } else {
+      cout << m - 1 << '\n';
+    }
   }
-  cout << ans << '\n';
 }
 
 int main() {
@@ -31,7 +37,6 @@ int main() {
   #endif
   cin.tie(nullptr)->sync_with_stdio(false);
   int nt = 1;
-  cin >> nt;
   while (nt--) {
     test_case();
   }

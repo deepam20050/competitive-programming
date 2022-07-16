@@ -14,13 +14,15 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
+const int N = 2e9 + 5;
+
+vector < int > odd;
+
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n; cin >> n;
+  int ans = 0;
+  for (int i = 3; i * i <= n + n - 1; i += 2) {
+    ++ans;
   }
   cout << ans << '\n';
 }
@@ -30,6 +32,9 @@ int main() {
     freopen("debug.txt", "w", stderr);
   #endif
   cin.tie(nullptr)->sync_with_stdio(false);
+  for (int i = 1; i * 1ll * i <= N; i += 2) {
+    odd.emplace_back(i * i);
+  }
   int nt = 1;
   cin >> nt;
   while (nt--) {

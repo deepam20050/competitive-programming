@@ -14,15 +14,37 @@ using namespace std;
 using lli = long long;
 using pii = pair < int, int >;
 
+const int N = 2e5 + 5;
+
+int a[N];
+
 void test_case() {
-  int m; cin >> m;
-  lli x = 1;
-  lli ans = 1e18;
-  while (x <= m) {
-    ans = min(ans, m - x);
-    x *= 10;
+  int n, k; cin >> n >> k;
+  int cnt = 0;
+  for (int i = 1; i <= n; ++i) {
+    cin >> a[i];
+    cnt += a[i] & 1;
   }
-  cout << ans << '\n';
+  if (cnt < k) {
+    cout << "NO\n";
+    return;
+  }
+  if (cnt % 2 != k % 2) {
+    cout << "NO\n";
+    return;
+  }
+  cout << "YES\n";
+  int prev = 1;
+  for (int i = 1; i <= n; ++i) {
+    if (k == 1) {
+      break;
+    }
+    if (a[i] & 1) {
+      cout << i << " "; 
+      --k;
+    }
+  }
+  cout << n << '\n';
 }
 
 int main() {
